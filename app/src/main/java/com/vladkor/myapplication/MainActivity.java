@@ -64,55 +64,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        person = new Person("Test");
+
         doneRegButton = findViewById(R.id.doneBut);
-        textQuestion = findViewById(R.id.questionText);
-        buttons = new RadioButton[]{
-                findViewById(R.id.radioButton),
-                findViewById(R.id.radioButton2),
-                findViewById(R.id.radioButton3),
-                findViewById(R.id.radioButton4)
-        };
-        nextBut = findViewById(R.id.nextButton);
+
         fm = getSupportFragmentManager();
         registrationForm = fm.findFragmentById(R.id.registrationForm);
-        questionForm = fm.findFragmentById(R.id.questionForm);
+
         plainText = findViewById(R.id.nameText);
-        idsQuestions = GenerateIds.GenerateRandomPosIds(buttons.length - 1);
 
 
-
-        buttons[0].setChecked(true);
-
-
-        try {
-            conv = new Converter(Converter.readText(getApplicationContext(), R.raw.data));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(counter == 0){
-            setData();
-        }
-
-        for(int i = 0; i < idsQuestions.length; i++){
-            buttons[i].setOnClickListener(this);
-        }
-
-        nextBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(counter < 4){
-                    Toast.makeText(getApplicationContext(), myAnswer.cheackCorrectAnswers(selected) ? "Верно" : "Не верно", Toast.LENGTH_SHORT).show();
-                    counter++;
-                    if(counter < 4) setData();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
-                }
-                buttons[0].setChecked(true);
-                selected = 0;
-            }
-        });
+        StartQuestionForm();
     }
 
     public void setData(){
@@ -142,6 +105,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void StartQuestionForm(){
+        textQuestion = findViewById(R.id.questionText);
+        buttons = new RadioButton[]{
+                findViewById(R.id.radioButton),
+                findViewById(R.id.radioButton2),
+                findViewById(R.id.radioButton3),
+                findViewById(R.id.radioButton4)
+        };
+        nextBut = findViewById(R.id.nextButton);
+        idsQuestions = GenerateIds.GenerateRandomPosIds(buttons.length - 1);
 
+        buttons[0].setChecked(true);
+
+
+        try {
+            conv = new Converter(Converter.readText(getApplicationContext(), R.raw.data));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(counter == 0){
+            setData();
+        }
+
+        for(int i = 0; i < idsQuestions.length; i++){
+            buttons[i].setOnClickListener(this);
+        }
+
+        nextBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(counter < 4){
+                    if(myAnswer.cheackCorrectAnswers(selected)) {
+                        person.addCorrect();
+                    }else{
+                        person.addUncorrect();
+                    }
+                    String score = Float.toString(person.getScore());
+                    Toast.makeText(getApplicationContext(), score, Toast.LENGTH_SHORT).show();
+                    counter++;
+                    if(counter < 4) setData();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
+                }
+                buttons[0].setChecked(true);
+                selected = 0;
+            }
+        });
     }
 }

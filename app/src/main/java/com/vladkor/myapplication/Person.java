@@ -31,14 +31,14 @@ public class Person {
     }
 
     private void setScore() {
-        score = uncorrect == 0 ? 0f : (float)(correct / uncorrect);
+        score = (float)correct / (uncorrect + correct);
     }
 
     public int getCorrect() {
         return correct;
     }
 
-    private void addCorrect() {
+    public void addCorrect() {
         correct++;
         setScore();
     }
@@ -47,7 +47,7 @@ public class Person {
         return uncorrect;
     }
 
-    private void addUncorrect() {
+    public void addUncorrect() {
         uncorrect++;
         setScore();
     }

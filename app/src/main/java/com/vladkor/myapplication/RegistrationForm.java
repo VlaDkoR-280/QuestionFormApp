@@ -27,4 +27,6 @@ public class RegistrationForm extends Fragment {
         return inflater.inflate(R.layout.fragment_registration_form, container, false);
 
     }
+
+
 }
