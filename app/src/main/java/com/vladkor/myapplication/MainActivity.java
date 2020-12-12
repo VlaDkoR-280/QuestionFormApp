@@ -26,14 +26,23 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private int counter = 0;
+
+
+
     private Question myQuestion;
     private Answer myAnswersTest = new Answer(new String[]{"dedefe", "fefefef", "mefemef", "vlad"}, 3);
-    private Answer myAnswers;
+    private Answer myAnswer;
+
 
     private TextView textQuestion;
     private RadioButton[] buttons;
     private ImageButton nextBut;
     private int selected = 0;
+
+    private Converter conv;
+
+    private int[] idsQuestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,43 +56,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 findViewById(R.id.radioButton4)
         };
         nextBut = findViewById(R.id.nextButton);
-        final int[] idsQuestions = GenerateIds.GenerateRandomPosIds(buttons.length - 1);
-
+        idsQuestions = GenerateIds.GenerateRandomPosIds(buttons.length - 1);
 
 
         buttons[0].setChecked(true);
 
-        Converter conv = null;
-        Question q = null;
+
         try {
             conv = new Converter(Converter.readText(getApplicationContext(), R.raw.data));
-            q = conv.getQuestionData();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        textQuestion.setText(q.toString());
-
-        for(int i = 0; i < idsQuestions.length; i++){
-            buttons[i].setText("RadioButtons" + idsQuestions[i]);
-            buttons[i].setOnClickListener(this);
+        if(counter == 0){
+            setData();
         }
 
-        myAnswersTest.setViewAnswer(buttons);
+        textQuestion.setText(myQuestion.toString());
+
+        myAnswer.setViewAnswer(buttons);
+
+        for(int i = 0; i < idsQuestions.length; i++){
+            buttons[i].setOnClickListener(this);
+        }
 
         nextBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), myAnswersTest.cheackCorrectAnswers(selected) ? "Верно" : "Не верно", Toast.LENGTH_SHORT).show();
-                Answer n = new Answer(myAnswersTest.getAnsewrs(), 3);
-                myAnswersTest = n;
-                myAnswersTest.setViewAnswer(buttons);
+                Toast.makeText(getApplicationContext(), myAnswer.cheackCorrectAnswers(selected) ? "Верно" : "Не верно", Toast.LENGTH_SHORT).show();
+                if(counter < 3){
+                    counter++;
+                    setData();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
-
     }
+
+    public void setData(){
+        myAnswer = conv.getAnswerData(counter);
+        myQuestion = conv.getQuestionData(counter);
+    }
+
+
 
     @Override
     public void onClick(View v) {
@@ -100,5 +118,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default: return;
         }
         int i = 1;
+    }
+
+    public void StartQuestion(){
+
     }
 }

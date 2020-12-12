@@ -2,19 +2,19 @@
 	"Text": "Test1 message",
 	"questions": {
 		"question1": {
-			"qustionText": "q1",
+			"questionText": "q1",
 			"correctAnswerId": 3
 		},
 		"question2": {
-			"qustionText": "q2",
+			"questionText": "q2",
 			"correctAnswerId": 2
 		},
 		"question3": {
-			"qustionText": "q3",
+			"questionText": "q3",
 			"correctAnswerId": 1
 		},
 		"question4": {
-			"qustionText": "q4",
+			"questionText": "q4",
 			"correctAnswerId": 0
 		}
 	},

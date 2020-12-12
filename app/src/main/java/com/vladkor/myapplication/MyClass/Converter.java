@@ -9,34 +9,67 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Converter {
 
 
     private JSONObject object;
-    private Answer answerData;
-    private Question questionData;
-
-    public Answer getAnswerData() {
-        return answerData;
-    }
-
-    private void setAnswerData(Answer answerData) {
-        this.answerData = answerData;
-    }
-
-    public Question getQuestionData() {
-        return questionData;
-    }
-
-    private void setQuestionData(Question questionData) {
-        this.questionData = questionData;
-    }
+    private List<Answer> answerData;
+    private List<Question> questionData;
+    private JSONObject answerObj;
+    private JSONObject questionObj;
 
     public Converter(String obj) throws JSONException {
         setObject(new JSONObject(obj));
-        Question quest = new Question(object.getString("Text"));
-        setQuestionData(quest);
+        answerObj = object.getJSONObject("answers");
+        questionObj = object.getJSONObject("questions");
+
+        setAnswerData();
+        setQuestionData();
+    }
+
+    public Answer getAnswerData(int id) {
+        return answerData.get(id);
+    }
+
+    private void setAnswerData() throws JSONException {
+        answerData = new ArrayList<>();
+
+        for(int i = 0; i < 4; i++){
+            String[] answers = new String[4];
+
+            for(int j = 0; j < 4; j++){
+                String name = "answers" + (i + 1);
+                String name2 = "answer" + (j + 1);
+                answers[j] = answerObj.getJSONObject(name).getString(name2).toString();
+            }
+            String name = "question" + (i + 1);
+            String ci = questionObj.getJSONObject(name).getString("correctAnswerId");
+            try{
+                Answer a = new Answer(answers, Integer.parseInt(ci));
+                answerData.add(a);
+            }catch (Exception e){
+
+            }
+
+
+        }
+
+
+    }
+
+    public Question getQuestionData(int id) {
+        return questionData.get(id);
+    }
+
+    private void setQuestionData() throws JSONException {
+        questionData = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            String name = "question" + (i + 1);
+            questionData.add(new Question(questionObj.getJSONObject(name).getString("questionText")));
+        }
     }
 
     private void setObject(JSONObject obj){
