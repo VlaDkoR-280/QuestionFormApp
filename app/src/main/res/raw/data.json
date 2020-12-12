@@ -2,46 +2,46 @@
 	"Text": "Test1 message",
 	"questions": {
 		"question1": {
-			"questionText": "q1",
-			"correctAnswerId": 3
-		},
-		"question2": {
-			"questionText": "q2",
+			"questionText": "Столица России",
 			"correctAnswerId": 2
 		},
-		"question3": {
-			"questionText": "q3",
+		"question2": {
+			"questionText": "Сколько у пауков ножек",
 			"correctAnswerId": 1
 		},
+		"question3": {
+			"questionText": "2 + 2 * 2",
+			"correctAnswerId": 0
+		},
 		"question4": {
-			"questionText": "q4",
+			"questionText": "Сколько в кг грамм",
 			"correctAnswerId": 0
 		}
 	},
 	"answers": {
 		"answers1": {
-			"answer1": "a1",
-			"answer2": "a2",
-			"answer3": "a3",
-			"answer4": "a4"
+			"answer1": "Мурманск",
+			"answer2": "Мексика",
+			"answer3": "Москва",
+			"answer4": "Санкт-Петербург"
 		},
 		"answers2": {
-			"answer1": "a1",
-			"answer2": "a2",
-			"answer3": "a3",
-			"answer4": "a4"
+			"answer1": "5",
+			"answer2": "6",
+			"answer3": "12",
+			"answer4": "8"
 		},
 		"answers3": {
-			"answer1": "a1",
-			"answer2": "a2",
-			"answer3": "a3",
-			"answer4": "a4"
+			"answer1": "6",
+			"answer2": "8",
+			"answer3": "12",
+			"answer4": "4"
 		},
 		"answers4": {
-			"answer1": "a1",
-			"answer2": "a2",
-			"answer3": "a3",
-			"answer4": "a4"
+			"answer1": "1000",
+			"answer2": "100",
+			"answer3": "1/1000",
+			"answer4": "1/100"
 		}
 	}
 }

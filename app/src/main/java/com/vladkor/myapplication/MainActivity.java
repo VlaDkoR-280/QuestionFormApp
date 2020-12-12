@@ -1,10 +1,17 @@
 package com.vladkor.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.SurfaceControl;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -34,6 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Answer myAnswersTest = new Answer(new String[]{"dedefe", "fefefef", "mefemef", "vlad"}, 3);
     private Answer myAnswer;
 
+    private Person person;
+    private Button doneRegButton;
+    private EditText plainText;
+
+    private Fragment registrationForm;
+    private Fragment questionForm;
+    private FragmentManager fm;
+
 
     private TextView textQuestion;
     private RadioButton[] buttons;
@@ -44,10 +59,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int[] idsQuestions;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        doneRegButton = findViewById(R.id.doneBut);
         textQuestion = findViewById(R.id.questionText);
         buttons = new RadioButton[]{
                 findViewById(R.id.radioButton),
@@ -56,7 +73,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 findViewById(R.id.radioButton4)
         };
         nextBut = findViewById(R.id.nextButton);
+        fm = getSupportFragmentManager();
+        registrationForm = fm.findFragmentById(R.id.registrationForm);
+        questionForm = fm.findFragmentById(R.id.questionForm);
+        plainText = findViewById(R.id.nameText);
         idsQuestions = GenerateIds.GenerateRandomPosIds(buttons.length - 1);
+
 
 
         buttons[0].setChecked(true);
@@ -73,10 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setData();
         }
 
-        textQuestion.setText(myQuestion.toString());
-
-        myAnswer.setViewAnswer(buttons);
-
         for(int i = 0; i < idsQuestions.length; i++){
             buttons[i].setOnClickListener(this);
         }
@@ -84,14 +102,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), myAnswer.cheackCorrectAnswers(selected) ? "Верно" : "Не верно", Toast.LENGTH_SHORT).show();
-                if(counter < 3){
+                if(counter < 4){
+                    Toast.makeText(getApplicationContext(), myAnswer.cheackCorrectAnswers(selected) ? "Верно" : "Не верно", Toast.LENGTH_SHORT).show();
                     counter++;
-                    setData();
+                    if(counter < 4) setData();
                 }else{
                     Toast.makeText(getApplicationContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
                 }
-
+                buttons[0].setChecked(true);
+                selected = 0;
             }
         });
     }
@@ -99,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setData(){
         myAnswer = conv.getAnswerData(counter);
         myQuestion = conv.getQuestionData(counter);
+        myAnswer.setViewAnswer(buttons);
+        textQuestion.setText(myQuestion.toString());
     }
 
 
@@ -120,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = 1;
     }
 
-    public void StartQuestion(){
+    public void StartQuestionForm(){
 
     }
 }
