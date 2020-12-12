@@ -1,0 +1,49 @@
+[
+	{
+		"Text": "Test1 message",
+		"questions": {
+			"question1": {
+				"qustionText": "q1",
+				"correctAnswerId": 3
+			},
+			"question2": {
+				"qustionText": "q2",
+				"correctAnswerId": 2
+			},
+			"question3": {
+				"qustionText": "q3",
+				"correctAnswerId": 1
+			},
+			"question4": {
+				"qustionText": "q4",
+				"correctAnswerId": 0
+			}
+		},
+		"answers": {
+			"answers1": {
+				"answer1": "a1",
+				"answer2": "a2",
+				"answer3": "a3",
+				"answer4": "a4"
+			},
+			"answers2": {
+				"answer1": "a1",
+				"answer2": "a2",
+				"answer3": "a3",
+				"answer4": "a4"
+			},
+			"answers3": {
+				"answer1": "a1",
+				"answer2": "a2",
+				"answer3": "a3",
+				"answer4": "a4"
+			},
+			"answers4": {
+				"answer1": "a1",
+				"answer2": "a2",
+				"answer3": "a3",
+				"answer4": "a4"
+			}
+		}
+	}
+]
