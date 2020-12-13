@@ -30,6 +30,7 @@
         app:layout_constraintStart_toEndOf="@+id/nameText"
         app:layout_constraintTop_toTopOf="@+id/nameText" />
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"

@@ -1,10 +1,6 @@
 package com.vladkor.myapplication.MyClass;
 
-import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
-import org.json.JSONObject;
 
 public class Answer {
     private int[] idsAnswers;
@@ -14,7 +10,7 @@ public class Answer {
     public Answer(String[] answers, int correct_answer){
         setAnsewrs(answers);
         setCorrectAnswerID(correct_answer);
-        idsAnswers = GenerateIds.GenerateRandomPosIds(answers.length - 1);
+        idsAnswers = GeneratorIds.GenerateRandomPosIds(answers.length - 1);
     }
 
     public int[] getIdsAnswers(){

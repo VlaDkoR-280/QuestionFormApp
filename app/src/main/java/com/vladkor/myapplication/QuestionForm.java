@@ -3,6 +3,8 @@ package com.vladkor.myapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vladkor.myapplication.MyClass.Answer;
 import com.vladkor.myapplication.MyClass.Converter;
-import com.vladkor.myapplication.MyClass.GenerateIds;
+import com.vladkor.myapplication.MyClass.GeneratorIds;
+import com.vladkor.myapplication.MyClass.Person;
 import com.vladkor.myapplication.MyClass.Question;
 
 import org.json.JSONException;
@@ -79,7 +81,7 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
                 v.findViewById(R.id.radioButton4)
         };
         nextBut = v.findViewById(R.id.nextButton);
-        idsQuestions = GenerateIds.GenerateRandomPosIds(buttons.length - 1);
+        idsQuestions = GeneratorIds.GenerateRandomPosIds(buttons.length - 1);
 
         buttons[0].setChecked(true);
 
@@ -102,23 +104,33 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
         nextBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                counter++;
+                if(myAnswer.cheackCorrectAnswers(selected)) {
+                    person.score.addCorrect();
+                }else{
+                    person.score.addUncorrect();
+                }
                 if(counter < 4){
-                    if(myAnswer.cheackCorrectAnswers(selected)) {
-                        person.addCorrect();
-                    }else{
-                        person.addUncorrect();
-                    }
-                    String score = Float.toString(person.getScore());
-                    Toast.makeText(v.getContext(), score, Toast.LENGTH_SHORT).show();
-                    counter++;
+
+//                    String score = Float.toString(person.getScore());
+//                    Toast.makeText(v.getContext(), score, Toast.LENGTH_SHORT).show();
+
                     if(counter < 4) setData();
                 }else{
-                    Toast.makeText(v.getContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
+                    startResultForm();
+//                    Toast.makeText(v.getContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
                 }
                 buttons[0].setChecked(true);
                 selected = 0;
             }
         });
+    }
+
+    protected void startResultForm(){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragmentForm, new ResultForm(person));
+        ft.commit();
     }
 
     @Override

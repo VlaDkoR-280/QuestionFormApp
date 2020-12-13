@@ -3,7 +3,7 @@ package com.vladkor.myapplication.MyClass;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GenerateIds {
+public class GeneratorIds {
 
     static public int[] GenerateRandomPosIds(int maxId){
         int[] a = new int[maxId + 1];

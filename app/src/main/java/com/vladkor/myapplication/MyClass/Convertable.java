@@ -6,5 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public interface Convertable {
-    public void Convert() throws JSONException;
+
+    public Answer getAnswerData(int id);
+    public Question getQuestionData(int id);
 }

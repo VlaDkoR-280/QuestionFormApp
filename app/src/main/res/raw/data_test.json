@@ -1,0 +1,27 @@
+{
+	"Text": "Test1 message",
+	"form1": {
+		"question": {
+			"questionText": "Столица России",
+		},
+		"answers": {
+			"answer1": "Мурманск",
+			"answer2": "Мексика",
+			"answer3": "Москва",
+			"answer4": "Санкт-Петербург",
+			"correctAnswerId": 2
+		}
+	},
+	"form2": {
+		"question": {
+			"questionText": "Сколько у пауков ножек",
+		},
+		"answers": {
+			"answer1": "5",
+			"answer2": "6",
+			"answer3": "12",
+			"answer4": "8",
+			"correctAnswerId": 1
+		}
+	}
+}

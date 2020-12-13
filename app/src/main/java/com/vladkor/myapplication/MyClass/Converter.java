@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Converter {
+public class Converter implements Convertable {
 
 
     private JSONObject object;
@@ -29,7 +29,7 @@ public class Converter {
         setAnswerData();
         setQuestionData();
     }
-
+    @Override
     public Answer getAnswerData(int id) {
         return answerData.get(id);
     }
@@ -59,7 +59,7 @@ public class Converter {
 
 
     }
-
+    @Override
     public Question getQuestionData(int id) {
         return questionData.get(id);
     }
