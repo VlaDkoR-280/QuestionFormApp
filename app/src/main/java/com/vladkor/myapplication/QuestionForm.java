@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,15 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
     }
 
     public void StartQuestionForm(){
+
+        try {
+            conv = new Converter(Converter.readText(v.getContext(), R.raw.data_test));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         textQuestion = v.findViewById(R.id.questionText);
         buttons = new RadioButton[]{
                 v.findViewById(R.id.radioButton),
@@ -81,23 +91,17 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
                 v.findViewById(R.id.radioButton4)
         };
         nextBut = v.findViewById(R.id.nextButton);
-        idsQuestions = GeneratorIds.GenerateRandomPosIds(buttons.length - 1);
+
 
         buttons[0].setChecked(true);
 
 
-        try {
-            conv = new Converter(Converter.readText(v.getContext(), R.raw.data));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         if(counter == 0){
             setData();
         }
 
-        for(int i = 0; i < idsQuestions.length; i++){
+        for(int i = 0; i < conv.getLengthAnswers(counter); i++){
             buttons[i].setOnClickListener(this);
         }
 
@@ -110,15 +114,10 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
                 }else{
                     person.score.addUncorrect();
                 }
-                if(counter < 4){
-
-//                    String score = Float.toString(person.getScore());
-//                    Toast.makeText(v.getContext(), score, Toast.LENGTH_SHORT).show();
-
-                    if(counter < 4) setData();
+                if(counter < conv.getLengthQuestions()){
+                    setData();
                 }else{
                     startResultForm();
-//                    Toast.makeText(v.getContext(), "Вы закончили тест, поздравляем!", Toast.LENGTH_LONG).show();
                 }
                 buttons[0].setChecked(true);
                 selected = 0;
@@ -131,7 +130,7 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragmentForm, new ResultForm(person));
         ft.commit();
-    }
+}
 
     @Override
     public void onClick(View v) {
@@ -147,5 +146,7 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
                 break;
             default: return;
         }
+        Log.d("Test", Integer.toString(selected));
+
     }
 }

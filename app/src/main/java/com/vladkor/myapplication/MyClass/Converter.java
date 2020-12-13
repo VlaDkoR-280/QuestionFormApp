@@ -2,6 +2,7 @@ package com.vladkor.myapplication.MyClass;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,67 +11,61 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Converter implements Convertable {
 
-
+    private ArrayList<Form> formsData;
     private JSONObject object;
-    private List<Answer> answerData;
-    private List<Question> questionData;
-    private JSONObject answerObj;
-    private JSONObject questionObj;
+    private int[] idsQuestions;
+
+
 
     public Converter(String obj) throws JSONException {
         setObject(new JSONObject(obj));
-        answerObj = object.getJSONObject("answers");
-        questionObj = object.getJSONObject("questions");
+        formsData = new ArrayList<>();
 
-        setAnswerData();
-        setQuestionData();
+        setFormData(object);
+        idsQuestions = GeneratorIds.GenerateRandomPosIds(getLengthQuestions() - 1);
     }
+
+    public int getLengthQuestions(){
+        return formsData.size();
+    }
+    public int getLengthAnswers(int id){
+        return formsData.get(id).answer.getAnsewrs().length - 1;
+    }
+
+
+    private void setFormData(JSONObject obj) throws JSONException {
+        int length = obj.getJSONObject("forms").length();
+        for(int i = 0; i < length; i++){
+            String name = "form" + (i + 1);
+            JSONObject form = obj.getJSONObject("forms").getJSONObject(name);
+            String questionText = form.getString("questionText");
+            Question myQuestion = new Question(questionText);
+            JSONObject answers = form.getJSONObject("answers");
+            String[] answerArray = new String[answers.length()];
+            for(int j = 0; j < answers.length() - 1; j++){
+                String answerName = "answer" + (j + 1);
+                answerArray[j] = answers.getString(answerName);
+            }
+            int correctAnswer = Integer.parseInt(answers.getString("correctAnswerId"));
+            Answer myAnswer = new Answer(answerArray, correctAnswer);
+            formsData.add(new Form(myQuestion, myAnswer));
+        }
+    }
+
     @Override
     public Answer getAnswerData(int id) {
-        return answerData.get(id);
+        return formsData.get(idsQuestions[id]).answer;
     }
 
-    private void setAnswerData() throws JSONException {
-        answerData = new ArrayList<>();
 
-        for(int i = 0; i < 4; i++){
-            String[] answers = new String[4];
-
-            for(int j = 0; j < 4; j++){
-                String name = "answers" + (i + 1);
-                String name2 = "answer" + (j + 1);
-                answers[j] = answerObj.getJSONObject(name).getString(name2).toString();
-            }
-            String name = "question" + (i + 1);
-            String ci = questionObj.getJSONObject(name).getString("correctAnswerId");
-            try{
-                Answer a = new Answer(answers, Integer.parseInt(ci));
-                answerData.add(a);
-            }catch (Exception e){
-
-            }
-
-
-        }
-
-
-    }
     @Override
     public Question getQuestionData(int id) {
-        return questionData.get(id);
+        return formsData.get(idsQuestions[id]).question;
     }
 
-    private void setQuestionData() throws JSONException {
-        questionData = new ArrayList<>();
-        for(int i = 0; i < 4; i++){
-            String name = "question" + (i + 1);
-            questionData.add(new Question(questionObj.getJSONObject(name).getString("questionText")));
-        }
-    }
 
     private void setObject(JSONObject obj){
         object = obj;

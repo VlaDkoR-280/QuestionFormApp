@@ -10,7 +10,7 @@ public class Answer {
     public Answer(String[] answers, int correct_answer){
         setAnsewrs(answers);
         setCorrectAnswerID(correct_answer);
-        idsAnswers = GeneratorIds.GenerateRandomPosIds(answers.length - 1);
+        idsAnswers = GeneratorIds.GenerateRandomPosIds(answers.length - 2);
     }
 
     public int[] getIdsAnswers(){

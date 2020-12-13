@@ -1,27 +1,56 @@
 {
 	"Text": "Test1 message",
-	"form1": {
-		"question": {
-			"questionText": "Столица России",
+	"forms": {
+		"form1": {
+			"questionText": "Столица России?",
+			"answers": {
+				"answer1": "Мурманск",
+				"answer2": "Мексика",
+				"answer3": "Москва",
+				"answer4": "Санкт-Петербург",
+				"correctAnswerId": 2
+			}
 		},
-		"answers": {
-			"answer1": "Мурманск",
-			"answer2": "Мексика",
-			"answer3": "Москва",
-			"answer4": "Санкт-Петербург",
-			"correctAnswerId": 2
-		}
-	},
-	"form2": {
-		"question": {
-			"questionText": "Сколько у пауков ножек",
+		"form2": {
+			"questionText": "Сколько у пауков ножек?",
+			"answers": {
+				"answer1": "5",
+				"answer2": "6",
+				"answer3": "12",
+				"answer4": "8",
+				"correctAnswerId": 1
+			}
 		},
-		"answers": {
-			"answer1": "5",
-			"answer2": "6",
-			"answer3": "12",
-			"answer4": "8",
-			"correctAnswerId": 1
+		"form3": {
+			"questionText": "Сколько в кг грамм?",
+			"answers": {
+				"answer1": "100",
+				"answer2": "1000",
+				"answer3": "1/100",
+				"answer4": "1/1000",
+				"correctAnswerId": 1
+			}
+		},
+		"form4": {
+			"questionText": "2 + 2 * 2 = ?",
+			"answers": {
+				"answer1": "5",
+				"answer2": "6",
+				"answer3": "12",
+				"answer4": "8",
+				"correctAnswerId": 1
+			}
+		},
+		"form5": {
+			"questionText": "Сколько классов в этой программе?",
+			"answers": {
+				"answer1": "1-4",
+				"answer2": "5-8",
+				"answer3": "9-15",
+				"answer4": "null",
+				"correctAnswerId": 2
+			}
 		}
 	}
+
 }

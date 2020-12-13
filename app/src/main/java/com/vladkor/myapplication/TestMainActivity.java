@@ -5,20 +5,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.widget.Button;
-
-import com.vladkor.myapplication.MyClass.Person;
 
 public class TestMainActivity extends AppCompatActivity {
 
-//    registration fragment
     RegistrationForm rf;
-    ResultForm resf;
-    QuestionForm qf;
     FragmentTransaction ft;
-    Button doneRegButton;
     FragmentManager fm;
-//    registration fragment
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +29,6 @@ public class TestMainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    public Person getPerson(){
-        return rf.getPerson();
-    }
 
 
 
