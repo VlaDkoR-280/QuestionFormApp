@@ -1,6 +1,8 @@
 package com.vladkor.myapplication.MyClass;
 
+import android.content.Context;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class Answer {
     private int[] idsAnswers;
@@ -38,8 +40,19 @@ public class Answer {
     }
 
     public void setViewAnswer(RadioButton[] buttons){
-        for(int i = 0; i < buttons.length; i++){
+        for(int i = 0; i < getAnsewrs().length - 1; i++){
             buttons[i].setText(ansewrs[idsAnswers[i]]);
+        }
+    }
+
+    public void setViewAnswer(RadioGroup rg, Context con){
+        rg.clearCheck();
+        rg.removeAllViews();
+
+        for(int i = 0; i < getAnsewrs().length - 1; i++){
+            RadioButton rb = new RadioButton(con);
+            rb.setText(ansewrs[idsAnswers[i]]);
+            rg.addView(rb);
         }
     }
 

@@ -1,11 +1,13 @@
 package com.vladkor.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vladkor.myapplication.MyClass.Answer;
 import com.vladkor.myapplication.MyClass.Converter;
@@ -30,7 +34,7 @@ import java.io.IOException;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuestionForm extends Fragment implements View.OnClickListener {
+public class QuestionForm extends Fragment{
 
     private View v;
 
@@ -44,6 +48,7 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
     private EditText plainText;
 
     private TextView textQuestion;
+    private RadioGroup rg;
     private RadioButton[] buttons;
     private ImageButton nextBut;
     private int selected = 0;
@@ -51,6 +56,8 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
     private Converter conv;
 
     private int[] idsQuestions;
+
+    private int difference = 0;
 
     public QuestionForm(Person p) {
         person = p;
@@ -62,18 +69,9 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.question_form, null);
-        StartQuestionForm();
-        return v;
-    }
-
-    public void setData(){
-        myAnswer = conv.getAnswerData(counter);
-        myQuestion = conv.getQuestionData(counter);
-        myAnswer.setViewAnswer(buttons);
-        textQuestion.setText(myQuestion.toString());
-    }
-
-    public void StartQuestionForm(){
+        rg = v.findViewById(R.id.radioGroup);
+        nextBut = v.findViewById(R.id.nextButton);
+        textQuestion = v.findViewById(R.id.questionText);
 
         try {
             conv = new Converter(Converter.readText(v.getContext(), R.raw.data_test));
@@ -83,33 +81,51 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-        textQuestion = v.findViewById(R.id.questionText);
-        buttons = new RadioButton[]{
-                v.findViewById(R.id.radioButton),
-                v.findViewById(R.id.radioButton2),
-                v.findViewById(R.id.radioButton3),
-                v.findViewById(R.id.radioButton4)
-        };
-        nextBut = v.findViewById(R.id.nextButton);
+        setData();
 
+        StartQuestionForm();
+        return v;
+    }
 
-        buttons[0].setChecked(true);
-
-
-
-        if(counter == 0){
-            setData();
+    public void setData(){
+        rg.clearCheck();
+        rg.removeAllViews();
+        myAnswer = conv.getAnswerData(counter);
+        myQuestion = conv.getQuestionData(counter);
+        buttons = new RadioButton[conv.getLengthAnswers(counter)];
+        for(int i = 0; i < buttons.length; i++){
+            buttons[i] = new RadioButton(v.getContext());
+            rg.addView(buttons[i]);
         }
 
-        for(int i = 0; i < conv.getLengthAnswers(counter); i++){
-            buttons[i].setOnClickListener(this);
-        }
+
+        rg.clearCheck();
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if((int)checkedId >= 0){
+                    selected = checkedId - (1 + difference);
+                }
+            }
+        });
+        myAnswer.setViewAnswer(buttons);
+        textQuestion.setText(myQuestion.toString());
+    }
+
+    public void StartQuestionForm(){
+
+
+
+
 
         nextBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 counter++;
-                if(myAnswer.cheackCorrectAnswers(selected)) {
+                difference += buttons.length;
+                if(myAnswer.cheackCorrectAnswers(selected) && selected != -1) {
                     person.score.addCorrect();
                 }else{
                     person.score.addUncorrect();
@@ -117,13 +133,16 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
                 if(counter < conv.getLengthQuestions()){
                     setData();
                 }else{
+                    rg.removeAllViews();
                     startResultForm();
+                    return;
                 }
                 buttons[0].setChecked(true);
-                selected = 0;
+                selected = -1;
             }
         });
     }
+
 
     protected void startResultForm(){
         FragmentManager fm = getFragmentManager();
@@ -132,21 +151,6 @@ public class QuestionForm extends Fragment implements View.OnClickListener {
         ft.commit();
 }
 
-    @Override
-    public void onClick(View v) {
-        RadioButton rb = (RadioButton) v;
-        switch (rb.getId()){
-            case R.id.radioButton: selected = 0;
-                break;
-            case R.id.radioButton2: selected = 1;
-                break;
-            case R.id.radioButton3: selected = 2;
-                break;
-            case R.id.radioButton4: selected = 3;
-                break;
-            default: return;
-        }
-        Log.d("Test", Integer.toString(selected));
 
-    }
+
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private TextView textQuestion;
+    private RadioGroup rg;
     private RadioButton[] buttons;
     private ImageButton nextBut;
     private int selected = 0;
@@ -82,28 +84,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         RadioButton rb = (RadioButton) v;
-        switch (rb.getId()){
-            case R.id.radioButton: selected = 0;
-                break;
-            case R.id.radioButton2: selected = 1;
-                break;
-            case R.id.radioButton3: selected = 2;
-                break;
-            case R.id.radioButton4: selected = 3;
-                break;
-            default: return;
-        }
+//        switch (rb.getId()){
+//            case R.id.radioButton: selected = 0;
+//                break;
+//            case R.id.radioButton2: selected = 1;
+//                break;
+//            case R.id.radioButton3: selected = 2;
+//                break;
+//            case R.id.radioButton4: selected = 3;
+//                break;
+//            default: return;
+//        }
         int i = 1;
     }
 
     public void StartQuestionForm(){
         textQuestion = findViewById(R.id.questionText);
-        buttons = new RadioButton[]{
-                findViewById(R.id.radioButton),
-                findViewById(R.id.radioButton2),
-                findViewById(R.id.radioButton3),
-                findViewById(R.id.radioButton4)
-        };
+//        buttons = new RadioButton[]{
+//                findViewById(R.id.radioButton),
+//                findViewById(R.id.radioButton2),
+//                findViewById(R.id.radioButton3),
+//                findViewById(R.id.radioButton4)
+//        };
         nextBut = findViewById(R.id.nextButton);
         idsQuestions = GeneratorIds.GenerateRandomPosIds(buttons.length - 1);
 
