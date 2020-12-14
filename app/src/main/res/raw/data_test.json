@@ -49,7 +49,18 @@
 				"answer3": "9-15",
 				"correctAnswerId": 2
 			}
+		},
+		"form6": {
+			"questionText": "Сколько сейчас времени?",
+			"answers": {
+				"answer1": "1:00-4:00",
+				"answer2": "5:00-8:00",
+				"answer3": "9:00-13:00",
+				"answer4": "14:00-17:00",
+				"answer5": "18:00-20:00",
+				"answer6": "21:00-24:00",
+				"correctAnswerId": 2
+			}
 		}
 	}
-
 }

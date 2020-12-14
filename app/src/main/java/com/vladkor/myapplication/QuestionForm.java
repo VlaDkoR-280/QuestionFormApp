@@ -52,7 +52,7 @@ public class QuestionForm extends Fragment{
     private RadioGroup rg;
     private RadioButton[] buttons;
     private ImageButton nextBut;
-    private int selected = 0;
+    private int selected = -1;
 
     private Converter conv;
 
@@ -117,8 +117,9 @@ public class QuestionForm extends Fragment{
             public void onClick(View v) {
                 difference += conv.getLengthAnswers(counter);
                 counter++;
-
-                if(selected >= 0 && myAnswer.cheackCorrectAnswers(selected)) {
+                if(selected < 0){
+                    person.score.addMissed();
+                }else if(myAnswer.cheackCorrectAnswers(selected)) {
                     person.score.addCorrect();
                 }else{
                     person.score.addUncorrect();

@@ -22,7 +22,9 @@ import com.vladkor.myapplication.MyClass.Person;
 public class ResultForm extends Fragment {
 
     View v;
-    ProgressBar scoreBar;
+    ProgressBar correctScoreBar;
+    ProgressBar uncorrectScoreBar;
+    ProgressBar missedScoreBar;
     TextView scoreText;
 
     PersonLayout pl;
@@ -42,13 +44,23 @@ public class ResultForm extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.result_form, null);
-        scoreBar = (ProgressBar) v.findViewById(R.id.scoreBar);
+        correctScoreBar = (ProgressBar) v.findViewById(R.id.CorrectProgressBar);
+        uncorrectScoreBar = (ProgressBar) v.findViewById(R.id.UncorrectProgressBar);
+        missedScoreBar = (ProgressBar) v.findViewById(R.id.MissedProgressBar);
         scoreText = (TextView) v.findViewById(R.id.scoreText);
 
+        int score =(int) (myPerson.score.getScore() * (float) 100);
+        scoreText.setText(Integer.toString(score) + "%");
+        correctScoreBar.setMax(myPerson.score.count());
+        correctScoreBar.setProgress(myPerson.score.getCorrect());
 
-        scoreText.setText(Float.toString(myPerson.score.getScore()));
-        scoreBar.setMax(myPerson.score.count());
-        scoreBar.setProgress(myPerson.score.getCorrect());
+
+        missedScoreBar.setMax(myPerson.score.count());
+        missedScoreBar.setProgress(myPerson.score.getCorrect() + myPerson.score.getMissed());
+
+        uncorrectScoreBar.setMax(myPerson.score.count());
+        uncorrectScoreBar.setProgress(myPerson.score.count());
+
 
 
         pl = new PersonLayout(myPerson);

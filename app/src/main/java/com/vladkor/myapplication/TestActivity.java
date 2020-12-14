@@ -3,6 +3,7 @@ package com.vladkor.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -12,12 +13,15 @@ public class TestActivity extends AppCompatActivity {
     String str[] = new String[]{
             "a", "b", "c", "d"
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         RadioGroup rg = findViewById(R.id.rad);
         RadioButton[] rbs = new RadioButton[str.length];
+        ProgressBar pb = findViewById(R.id.progressBarTest);
+        pb.setProgress(70);
         for(int i = 0; i < rbs.length; i++){
             rbs[i] = new RadioButton(this);
             rbs[i].setText(str[i]);
