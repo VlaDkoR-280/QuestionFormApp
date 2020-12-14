@@ -32,7 +32,7 @@ public class Converter implements Convertable {
         return formsData.size();
     }
     public int getLengthAnswers(int id){
-        return formsData.get(id).answer.getAnsewrs().length - 1;
+        return formsData.get(idsQuestions[id]).answer.getAnsewrs().length - 1;
     }
 
 

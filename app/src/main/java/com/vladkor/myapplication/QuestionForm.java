@@ -1,6 +1,7 @@
 package com.vladkor.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -88,18 +89,8 @@ public class QuestionForm extends Fragment{
     }
 
     public void setData(){
-        rg.clearCheck();
-        rg.removeAllViews();
         myAnswer = conv.getAnswerData(counter);
         myQuestion = conv.getQuestionData(counter);
-        buttons = new RadioButton[conv.getLengthAnswers(counter)];
-        for(int i = 0; i < buttons.length; i++){
-            buttons[i] = new RadioButton(v.getContext());
-            rg.addView(buttons[i]);
-        }
-
-
-        rg.clearCheck();
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -107,10 +98,11 @@ public class QuestionForm extends Fragment{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if((int)checkedId >= 0){
                     selected = checkedId - (1 + difference);
+                    Log.d("MyTest", counter + " | " + difference + " | " + selected);
                 }
             }
         });
-        myAnswer.setViewAnswer(buttons);
+        myAnswer.setViewAnswer(rg, v.getContext());
         textQuestion.setText(myQuestion.toString());
     }
 
@@ -123,9 +115,10 @@ public class QuestionForm extends Fragment{
         nextBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                difference += conv.getLengthAnswers(counter);
                 counter++;
-                difference += buttons.length;
-                if(myAnswer.cheackCorrectAnswers(selected) && selected != -1) {
+
+                if(selected >= 0 && myAnswer.cheackCorrectAnswers(selected)) {
                     person.score.addCorrect();
                 }else{
                     person.score.addUncorrect();
@@ -137,7 +130,6 @@ public class QuestionForm extends Fragment{
                     startResultForm();
                     return;
                 }
-                buttons[0].setChecked(true);
                 selected = -1;
             }
         });
