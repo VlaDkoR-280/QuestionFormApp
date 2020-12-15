@@ -33,6 +33,7 @@ public class ResultForm extends Fragment {
 
     private FragmentManager fm;
 
+
     public ResultForm(Person person) {
         myPerson = person;
     }

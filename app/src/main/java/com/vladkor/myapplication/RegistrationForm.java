@@ -30,7 +30,7 @@ public class RegistrationForm extends Fragment implements View.OnClickListener {
 
     private RadioButton[] rButtons;
 
-    private int selected = 0;
+    private int selected = 1;
 
     private QuestionFormRecycler qfr;
     private QuestionForm qf;
@@ -54,15 +54,17 @@ public class RegistrationForm extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.registration_form, null);
         rButtons = new RadioButton[2];
         rButtons[0] = v.findViewById(R.id.firstRadButton);
-        rButtons[0].setChecked(true);
         rButtons[1] = v.findViewById(R.id.secondRadButon);
+        rButtons[1].setChecked(true);
         rButtons[0].setOnClickListener(this);
         rButtons[1].setOnClickListener(this);
 
         btn = (Button) v.findViewById(R.id.doneBut);
         plain = (EditText) v.findViewById(R.id.nameText);
         if(person != null){
-            plain.setClickable(false);
+            plain.setHint(person.getName());
+            plain.setEnabled(false);
+
         }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

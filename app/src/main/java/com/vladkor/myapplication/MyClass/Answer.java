@@ -38,6 +38,9 @@ public class Answer {
     public boolean cheackCorrectAnswers(int id){
         return correctAnswerID == idsAnswers[id];
     }
+    public boolean cheackCorrectAnswers(String str){
+        return ansewrs[correctAnswerID] == str;
+    }
 
     public void setViewAnswer(RadioButton[] buttons){
         for(int i = 0; i < getAnsewrs().length - 1; i++){
