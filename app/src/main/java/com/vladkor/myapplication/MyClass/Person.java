@@ -1,17 +1,21 @@
 package com.vladkor.myapplication.MyClass;
 
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
-
 public class Person {
     private String name;
     public Score score;
+    private int attemps;
 
     public Person(String name){
         setName(name);
         score = new Score();
+        attemps = 0;
+    }
 
+    public void addAttemp(){
+        attemps++;
+    }
+    public int getAttemp(){
+        return attemps;
     }
 
     public String getName() {

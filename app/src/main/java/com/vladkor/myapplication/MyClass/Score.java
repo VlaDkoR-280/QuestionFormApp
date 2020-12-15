@@ -28,4 +28,9 @@ public class Score{
     public int getMissed(){
         return missed;
     }
+    public void clearScore(){
+        correct = 0;
+        uncorrect = 0;
+        missed = 0;
+    }
 }

@@ -42,4 +42,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView">
+
+        <RadioButton
+            android:id="@+id/firstRadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Первый вариант отображения" />
+
+        <RadioButton
+            android:id="@+id/secondRadButon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Второй вариант отображения" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
