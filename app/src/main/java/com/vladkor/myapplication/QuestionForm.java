@@ -1,7 +1,6 @@
 package com.vladkor.myapplication;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,7 @@ public class QuestionForm extends Fragment{
     private RadioGroup rg;
     private RadioButton[] buttons;
     private ImageButton nextBut;
-    private int selected = -1;
+    private String selected = null;
 
     private Converter conv;
 
@@ -86,18 +85,20 @@ public class QuestionForm extends Fragment{
         myAnswer = conv.getAnswerData(counter);
         myQuestion = conv.getQuestionData(counter);
 
+        rg.removeAllViews();
+        myAnswer.setViewAnswer(rg, getContext());
+        textQuestion.setText(myQuestion.toString());
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if((int)checkedId >= 0){
-                    selected = checkedId - (1 + difference);
-                    Log.d("MyTest", counter + " | " + difference + " | " + selected);
+                RadioButton rb = v.findViewById(checkedId);
+                if(rb == null){
+                    return;
                 }
+                selected = rb.getText().toString();
             }
         });
-        myAnswer.setViewAnswer(rg, v.getContext());
-        textQuestion.setText(myQuestion.toString());
     }
 
     public void StartQuestionForm(){
@@ -111,7 +112,7 @@ public class QuestionForm extends Fragment{
             public void onClick(View v) {
                 difference += conv.getLengthAnswers(counter);
                 counter++;
-                if(selected < 0){
+                if(selected == null){
                     person.score.addMissed();
                 }else if(myAnswer.cheackCorrectAnswers(selected)) {
                     person.score.addCorrect();
@@ -125,7 +126,7 @@ public class QuestionForm extends Fragment{
                     startResultForm();
                     return;
                 }
-                selected = -1;
+                selected = null;
             }
         });
     }

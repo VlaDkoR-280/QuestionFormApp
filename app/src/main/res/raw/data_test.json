@@ -42,23 +42,22 @@
 			}
 		},
 		"form5": {
-			"questionText": "Сколько классов в этой программе?",
+			"questionText": "На каком языке написано это приложение?",
 			"answers": {
-				"answer1": "1-4",
-				"answer2": "5-8",
-				"answer3": "9-15",
-				"correctAnswerId": 2
+				"answer1": "На русском",
+				"answer2": "На Java",
+				"correctAnswerId": 1
 			}
 		},
 		"form6": {
-			"questionText": "Сколько сейчас времени?",
+			"questionText": "Какая птица не умеет летать?",
 			"answers": {
-				"answer1": "1:00-4:00",
-				"answer2": "5:00-8:00",
-				"answer3": "9:00-13:00",
-				"answer4": "14:00-17:00",
-				"answer5": "18:00-20:00",
-				"answer6": "21:00-24:00",
+				"answer1": "Ласточка",
+				"answer2": "Голубь",
+				"answer3": "Пингвин",
+				"answer4": "Синица",
+				"answer5": "Снегирь",
+				"answer6": "Дятел",
 				"correctAnswerId": 2
 			}
 		}
